@@ -1,0 +1,143 @@
+# VM Creation Lab
+
+## Objective
+
+Create and configure virtual machines using KVM/QEMU and libvirt as part of a cybersecurity homelab. The goal was to establish dedicated Linux and Windows environments that can later be used for security testing, administration, monitoring, and network experimentation.
+
+## Host Environment
+
+* **CPU:** AMD Ryzen 7 3700X
+* **CPU:** 8 physical cores / 16 logical processors
+* **RAM:** 64 GB
+* **GPU:** NVIDIA RTX 3070
+* **Storage:** 1 TB NVMe
+* **Host OS:** Ubuntu Linux
+* **Virtualization:** KVM/QEMU
+* **VM management:** libvirt
+
+## Virtual Machines
+
+### Ubuntu VM — `lab-ubuntu01`
+
+| Configuration   | Value     |
+| --------------- | --------- |
+| vCPU            | 2         |
+| RAM             | 4 GiB     |
+| Virtual disk    | 30 GiB    |
+| Disk format     | QCOW2     |
+| Virtual NIC     | Virtio    |
+| Virtual network | `default` |
+| Security model  | AppArmor  |
+| Persistent      | Yes       |
+| Autostart       | Disabled  |
+
+Virtual disk:
+
+```text
+/var/lib/libvirt/images/lab-ubuntu01.qcow2
+```
+
+The virtual disk has a capacity of approximately 30 GiB. Because QCOW2 supports sparse allocation, the physical storage consumed by the image is currently smaller than its virtual capacity.
+
+### Windows VM — `lab-windows01`
+
+| Configuration   | Value        |
+| --------------- | ------------ |
+| vCPU            | 4            |
+| RAM             | 8 GiB        |
+| Virtual disk    | 80 GiB       |
+| Disk format     | QCOW2        |
+| Virtual NIC     | Intel E1000e |
+| Virtual network | `default`    |
+| Security model  | AppArmor     |
+| Persistent      | Yes          |
+| Autostart       | Disabled     |
+
+Virtual disk:
+
+```text
+/var/lib/libvirt/images/lab-windows01.qcow2
+```
+
+Installation media:
+
+```text
+/var/lib/libvirt/boot/Windows11_Client_x64_en-us_26300_9457.iso
+```
+
+The Windows VM was configured with an 80 GiB virtual disk and an attached Windows 11 installation ISO.
+
+## Virtualization Architecture
+
+The physical Ubuntu system acts as the virtualization host. KVM/QEMU provides hardware-assisted virtualization, while libvirt provides management and configuration of the virtual machines.
+
+```text
+Physical Ubuntu Host
+│
+├── KVM/QEMU
+│
+├── lab-ubuntu01
+│   ├── 2 vCPU
+│   ├── 4 GiB RAM
+│   ├── 30 GiB QCOW2
+│   └── Virtio NIC
+│
+└── lab-windows01
+    ├── 4 vCPU
+    ├── 8 GiB RAM
+    ├── 80 GiB QCOW2
+    └── E1000e NIC
+```
+
+Both virtual machines are attached to the libvirt `default` virtual network. Detailed network and LAN configuration is documented separately in the networking section.
+
+## Security Considerations
+
+Virtualization provides separate operating-system environments on the same physical host. This allows the lab to isolate systems and conduct security-related experiments without requiring separate physical computers.
+
+The VMs use QCOW2 virtual disks, allowing the virtual storage to be managed independently from the host operating system.
+
+The VMs are also protected by AppArmor at the libvirt virtualization layer.
+
+Network configuration is intentionally documented separately to distinguish **VM creation and resource allocation** from **network architecture and connectivity**.
+
+## Skills Demonstrated
+
+* KVM/QEMU virtualization
+* libvirt VM management
+* Virtual CPU allocation
+* Virtual memory allocation
+* Virtual disk configuration
+* QCOW2 storage
+* Virtual NIC configuration
+* Linux virtualization administration
+* Windows and Linux VM deployment
+* Virtualized cybersecurity lab design
+
+## Lessons Learned
+
+This lab provided hands-on experience managing virtual infrastructure from a Linux host rather than relying exclusively on a graphical virtualization interface.
+
+Using `virsh` also provided practical experience inspecting VM resources and configuration from the command line.
+
+The lab establishes the foundation for additional security work involving network segmentation, monitoring, traffic analysis, vulnerability management, and Windows/Linux security testing.
+
+## Verification Commands
+
+The VM configuration was verified using libvirt command-line tools:
+
+```bash
+virsh dominfo lab-ubuntu01
+virsh dominfo lab-windows01
+
+virsh domblklist lab-ubuntu01
+virsh domblklist lab-windows01
+
+virsh domblkinfo lab-ubuntu01 vda
+virsh domblkinfo lab-windows01 sda
+
+virsh domiflist lab-ubuntu01
+virsh domiflist lab-windows01
+```
+
+These commands were used to verify CPU, memory, storage, virtual disk capacity, and virtual network adapter configuration.
