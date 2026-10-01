@@ -1,0 +1,196 @@
+# Wireshark Traffic Analysis Lab
+
+## Objective
+
+Use Wireshark to capture and analyze network traffic generated within the cybersecurity homelab.
+
+The objective was to gain practical experience with packet capture, protocol identification, traffic inspection, and network troubleshooting.
+
+## Environment
+
+* **Host OS:** Ubuntu Linux
+* **Virtualization:** KVM/QEMU
+* **VM management:** libvirt
+* **Virtual network:** `default`
+* **Network analysis tool:** Wireshark
+* **Lab systems:** Ubuntu and Windows virtual machines
+
+## Network Architecture
+
+Wireshark was used as the primary packet-analysis tool for observing traffic within the lab environment.
+
+```text
+Physical Ubuntu Host
+│
+├── KVM/QEMU
+│   │
+│   ├── lab-ubuntu01
+│   │
+│   └── lab-windows01
+│
+└── Virtual Network
+    │
+    └── Wireshark
+        └── Packet Capture & Analysis
+```
+
+## Packet Capture
+
+Wireshark was configured to capture network traffic from the appropriate network interface.
+
+The capture process provided visibility into individual packets rather than only the higher-level connection information normally available through commands such as:
+
+```bash
+ping
+ss
+ip addr
+ip route
+```
+
+Packet captures can provide information including:
+
+* Source and destination IP addresses
+* Source and destination MAC addresses
+* Protocols
+* Source and destination ports
+* Packet size
+* TCP flags
+* DNS queries
+* ICMP traffic
+* Connection establishment
+* Application-layer traffic when unencrypted
+
+## Traffic Analysis
+
+Wireshark was used to inspect individual packets and identify the protocols involved in network communication.
+
+For example, ICMP traffic generated during connectivity testing can be examined at the packet level.
+
+A typical ICMP exchange can be represented as:
+
+```text
+Ubuntu
+  │
+  │ ICMP Echo Request
+  ▼
+Windows
+  │
+  │ ICMP Echo Reply
+  ▼
+Ubuntu
+```
+
+This allows network connectivity to be examined beyond simply observing whether `ping` succeeds or fails.
+
+## Useful Wireshark Filters
+
+Display filters provide a way to isolate specific traffic during analysis.
+
+### ICMP
+
+```text
+icmp
+```
+
+Used to isolate ICMP traffic such as ping requests and replies.
+
+### TCP
+
+```text
+tcp
+```
+
+Displays TCP traffic.
+
+### UDP
+
+```text
+udp
+```
+
+Displays UDP traffic.
+
+### DNS
+
+```text
+dns
+```
+
+Displays DNS traffic.
+
+### Specific Host
+
+```text
+ip.addr == <IP_ADDRESS>
+```
+
+Displays traffic involving a specific IP address.
+
+### Specific Port
+
+```text
+tcp.port == <PORT>
+```
+
+Displays TCP traffic involving a specific port.
+
+## Security Applications
+
+Packet analysis is an important component of network security operations.
+
+Wireshark can be used to investigate:
+
+* Unexpected network connections
+* Suspicious protocols
+* Unusual source or destination addresses
+* Cleartext credentials or sensitive data
+* Malware-related network activity
+* DNS activity
+* Command-and-control traffic
+* Network troubleshooting
+* Firewall and connectivity issues
+
+Packet analysis can also provide supporting evidence during incident investigation by allowing analysts to examine network activity at the packet level.
+
+## Security Considerations
+
+Network captures can contain sensitive information, including IP addresses, hostnames, usernames, DNS queries, and potentially application data.
+
+Captured traffic should therefore be treated as potentially sensitive information and stored appropriately.
+
+Encrypted protocols also limit the visibility of application-layer content. Although packet metadata may remain visible, encryption can prevent the contents of communications from being directly inspected.
+
+## Skills Demonstrated
+
+* Wireshark packet capture
+* Network protocol identification
+* Packet-level traffic analysis
+* ICMP analysis
+* TCP/UDP analysis
+* DNS traffic analysis
+* Wireshark display filters
+* Network troubleshooting
+* Security-focused network monitoring
+
+## Lessons Learned
+
+Wireshark provides significantly more visibility than basic network utilities because it allows individual packets and protocol fields to be examined.
+
+Using packet captures alongside Linux and Windows networking commands provides multiple layers of visibility when troubleshooting or investigating network activity.
+
+The lab also demonstrated the importance of understanding normal network traffic before attempting to identify anomalous behavior.
+
+## Future Work
+
+Future networking labs can expand this work into:
+
+* TCP three-way handshake analysis
+* SSH login capture
+* DNS investigation
+* DHCP traffic analysis
+* HTTP/HTTPS traffic comparison
+* ARP analysis
+* Firewall rule validation
+* Network attack detection
+* IDS/IPS integration
+* Traffic analysis during controlled security exercises
