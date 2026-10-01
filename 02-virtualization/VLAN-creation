@@ -1,0 +1,105 @@
+# Virtual LAN Creation Lab
+
+## Objective
+
+Create a virtual network within the KVM/QEMU virtualization environment to provide a dedicated network segment for the cybersecurity homelab virtual machines.
+
+The virtual LAN provides the network infrastructure that connects the lab virtual machines while remaining separate from the physical network configuration.
+
+## Environment
+
+* **Host OS:** Ubuntu Linux
+* **Hypervisor:** KVM/QEMU
+* **Virtualization management:** libvirt
+* **Virtual network:** `default`
+* **Virtual machines:** `lab-ubuntu01`, `lab-windows01`
+
+## Virtual LAN Configuration
+
+The lab virtual machines were connected to the libvirt `default` virtual network.
+
+```text
+Physical Ubuntu Host
+│
+├── KVM/QEMU
+│
+└── libvirt virtual network
+    │
+    ├── lab-ubuntu01
+    │   └── Virtio NIC
+    │
+    └── lab-windows01
+        └── E1000e NIC
+```
+
+### Virtual Network Assignments
+
+| VM              | Virtual Network | NIC Model |
+| --------------- | --------------- | --------- |
+| `lab-ubuntu01`  | `default`       | Virtio    |
+| `lab-windows01` | `default`       | E1000e    |
+
+The network interface assignments were verified using:
+
+```bash
+virsh domiflist lab-ubuntu01
+virsh domiflist lab-windows01
+```
+
+## Network Architecture
+
+The virtual network acts as the network layer connecting the virtual machines within the virtualization environment.
+
+The VMs do not require separate physical Ethernet connections to communicate through the virtual network. Their virtual network interfaces connect to the libvirt-managed network instead.
+
+This provides a controlled environment for future cybersecurity exercises involving:
+
+* Network traffic analysis
+* Packet capture
+* Firewall configuration
+* Network monitoring
+* Host-to-host communication
+* Security testing
+* Network segmentation
+
+## Security Considerations
+
+A virtual network provides an additional layer of separation between virtual machines and the physical host/network architecture.
+
+Using a dedicated virtual networking environment allows network-based security exercises to be performed without requiring separate physical systems for every lab component.
+
+Network connectivity and traffic analysis are documented separately in the networking section of this portfolio.
+
+## Verification
+
+The virtual network attachment was verified with:
+
+```bash
+virsh domiflist lab-ubuntu01
+virsh domiflist lab-windows01
+```
+
+Verified configuration:
+
+```text
+lab-ubuntu01 → default → Virtio
+lab-windows01 → default → E1000e
+```
+
+## Skills Demonstrated
+
+* KVM/QEMU virtual networking
+* libvirt network management
+* Virtual NIC configuration
+* Virtual network architecture
+* Linux virtualization administration
+* Cybersecurity lab network design
+* Network isolation concepts
+
+## Lessons Learned
+
+Creating a virtual LAN provides the networking foundation required for a multi-system cybersecurity lab.
+
+The virtualization layer allows network infrastructure to be created and managed in software, providing a flexible environment for future security testing and network monitoring without requiring additional physical hardware.
+
+Connectivity testing, packet analysis, and network security controls will be documented separately.
