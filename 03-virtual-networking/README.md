@@ -1,6 +1,6 @@
 # Networking
 
-Documentation of networking configuration, troubleshooting, traffic analysis, and virtual networking performed in the homelab.
+Documentation of networking configuration, troubleshooting, traffic analysis, and virtual networking performed in the homelab between a linux and windows VM.
 
 ## Labs
 
