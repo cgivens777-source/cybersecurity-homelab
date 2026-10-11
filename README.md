@@ -25,51 +25,39 @@ Below are both the projects that I have already completed, others that have bega
 
 ## Projects
 
-### Linux
+### Linux Administration and Hardening
+- Ubuntu installation and dual-boot configuration
+- Linux user and privilege management
+- File permissions and SUID/SGID enumeration
+- UFW firewall configuration
+- SSH key-based authentication and access restrictions
 
-* Ubuntu installation and configuration
-* Linux command-line administration
-* User and privilege management
-* File permissions
-* Sudo configuration
-* SUID/SGID security review
-* Service and process analysis
-* Linux system hardening
+### Virtualization and Infrastructure
+- Proxmox VE deployment and administration
+- KVM/QEMU and libvirt virtual machine management
+- Ubuntu Server and Windows 11 virtual machines
+- Virtual disk, CPU, memory, and network adapter configuration
+- pfSense virtual firewall deployment
 
-### Windows
+### Networking and Security
+- Virtual network and bridge configuration
+- pfSense WAN/LAN interface setup
+- Private lab subnet and DHCP configuration
+- Windows–Ubuntu connectivity troubleshooting
+- Wireshark packet capture and traffic analysis
+- Firewall policy development and network segmentation
 
-* Windows installation and configuration
-* Windows administration
-* Windows command-line tools
-* Windows/Linux interoperability
-* System and network troubleshooting
+### Security Engineering
+- Linux system hardening
+- Network security controls
+- Security configuration verification
+- Hands-on troubleshooting and technical documentation
 
-### Networking
-
-* Home network architecture
-* Virtual networking
-* Windows/Linux connectivity
-* IP addressing and routing
-* Network troubleshooting
-* Wireshark packet capture and analysis
-
-### Security
-
-* Linux hardening
-* Access control
-* Privilege management
-* Network security
-* Traffic analysis
-* Security monitoring
-* Vulnerability identification
-
-### Scripting & Automation
-
-* Python fundamentals
-* Command-line automation
-* Security-oriented scripting
-* File and data processing
-
+### Scripting and Automation
+- Linux command-line administration
+- Foundational scripting and automation
+- Repeatable configuration and verification workflows
+  
 ## Documentation
 
 Each project documents:
